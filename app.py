@@ -3,7 +3,7 @@ This is the main code of my program, Guess the number !!!
 """
 import random
 import time
-# import unittest
+
 
 # Functions
 def get_guess_Player():
@@ -20,8 +20,9 @@ def get_guess_computer():
       print(computerNumber)
       return computerNumber
    
-def mainFunction():
-    secretNumber= random.randint(1, 100)
+def mainFunction(secretNumber=None):
+    if secretNumber is None:
+        secretNumber= random.randint(1, 100)
     flag= True
     while flag:
         player_guess= get_guess_Player()
@@ -32,7 +33,7 @@ def mainFunction():
             break
         else:
             if player_guess > secretNumber:
-                print('Too higth')
+                print('Too high')
             else:
                 print('Too low')
 
@@ -49,4 +50,5 @@ def mainFunction():
                 print('Too low')
        
 
-mainFunction()
+if __name__ == '__main__':
+    mainFunction()
