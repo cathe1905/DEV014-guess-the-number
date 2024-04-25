@@ -75,6 +75,12 @@ if __name__ == '__main__':
     mainFunction()
 
 #This block of code ask the player if they want to play again or not
-ask_play_again= input('Do you want to play again? ')
-if ask_play_again.lower() == "yes" or "y" or "si" or "s":
-    mainFunction()
+def ask_play_again():
+    answer_player= input('Do you want to play again? ')
+    if answer_player.lower() in ["yes", "y", "si", "s"]:
+        mainFunction()
+    else: 
+        print('See you later')
+        print()
+        return;
+ask_play_again()
