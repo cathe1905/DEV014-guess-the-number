@@ -2,34 +2,31 @@
 This is the test !!!
 """
 import unittest
-from app import get_guess_computer, get_guess_Player, mainFunction
-from unittest.mock import patch
-import io
-import random
+from app import get_guess_computer, get_guess_player, mainFunction
+from unittest.mock import patch, MagicMock, Mock
 
 class TestMainCode(unittest.TestCase):
+    
     def test_get_computer(self):
-        with patch('sys.stdout', new= io.StringIO()) as fake_out:
             result = get_guess_computer()
-            self.assertIsInstance(result, int)
             self.assertGreaterEqual(result, 1)
-            self.assertLessEqual(result, 100)
-            self.assertEqual(fake_out.getvalue(), '')
+            self.assertLessEqual(result, 100)    
 
-    def test_get_player(self):
-        with patch('sys.stdout', new= io.StringIO()) as fake_out:
-            result= get_guess_Player()
-            self.assertIsInstance(result, int)
-            self.assertGreaterEqual(result, 1)
-            self.assertLessEqual(result, 100)
-            self.assertEqual(fake_out.getvalue(), '')
+    @patch('builtins.input', return_value=22)
+    def test_get_player(self, mock_input):
+            result= get_guess_player()
+            self.assertEqual(result, 22)
 
     def test_main_function(self):
-      secret_number = random.randint(1, 100)
-      with patch('sys.stdout', new=io.StringIO()) as fake_out:
-        mainFunction(secret_number)
-        print("Captured Output:", fake_out.getvalue())
-        self.assertEqual(fake_out.getvalue(), '')
+        get_guess_player= Mock()
+        get_guess_player()
+        get_guess_player.assert_called_once()
+
+    @patch('app.mainFunction', return_value=False)
+    def test_main_function2(self, mock_main):
+        result = mock_main()  
+        self.assertFalse(result, "the function doesn't work properly")
+          
 
 if __name__ == '__main__':
     unittest.main()

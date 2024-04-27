@@ -4,51 +4,58 @@ This is the main code of my program, Guess the number !!!
 import random
 import time
 
-
+secretNumber= random.randint(1, 100)
 # Functions
-def get_guess_Player():
-       print("##### Player's turn ####")
+def get_guess_player():
        time.sleep(2)
+       global number
        number= int(input("I'ts your turn, please guess the number, write it down here:"))
-       print(number)
        return number
 
 def get_guess_computer():
-      print("##### Computer's turn ####")
       time.sleep(2)
+      global computerNumber
       computerNumber= random.randint(1, 100)
-      print(computerNumber)
       return computerNumber
-   
-def mainFunction(secretNumber=None):
-    if secretNumber is None:
-        secretNumber= random.randint(1, 100)
-    flag= True
-    while flag:
-        player_guess= get_guess_Player()
-        time.sleep(2)
-        if player_guess == secretNumber:
-            print("Congratulations! You won...")
-            flag= False
-            break
-        else:
-            if player_guess > secretNumber:
-                print('Too high')
-            else:
-                print('Too low')
 
-        computer_guess= get_guess_computer()
+def evaluate_guess(guess):
+    if guess == secretNumber:
+        print("Congratulations! You won...")
+        return True
+    elif guess > secretNumber:
+        print('Too high')
+    else:
+        print('Too low')
+    return False
+    
+   
+def mainFunction():    
+    flag_for_break_loop= True
+    while flag_for_break_loop:
+        print("##### Player's turn ####")
+        player_guess= get_guess_player()
         time.sleep(2)
-        if computer_guess == secretNumber:
-            print("Congratulations! You won...")
-            flag= False
+        if evaluate_guess(player_guess):
+            flag_for_break_loop= False
             break
-        else:
-            if computer_guess > secretNumber:
-                print('Too higth')
-            else:
-                print('Too low')
+        
+        
+        print("#### Computer's turn ####")
+        computer_guess= get_guess_computer()
+        print(f"It's the computer's turn: {computer_guess} ")
+        time.sleep(2)
+        if evaluate_guess(computer_guess):
+            flag_for_break_loop= False
+            break
+        
+    print(flag_for_break_loop)   
+    return flag_for_break_loop
        
 
 if __name__ == '__main__':
     mainFunction()
+    get_guess_computer()
+    get_guess_player()
+    evaluate_guess()
+
+
