@@ -86,38 +86,39 @@ def mainFunction():
     global guesses_computer, guesses_player
     global minimo, maximo
         
-    guesses_computer= []
+    guesses_computer= [] #create an empty list to store the players' attempts
     guesses_player= [] 
-    flag_for_break_loop= True
+    flag_for_break_loop= True #I create a variable that I will return when the loop breaks.
 
-    while flag_for_break_loop:
-        print("##### Player's turn ####")
-        player_guess= player.get_guess_player()
-        guesses_player.append(player_guess)
-        player.create_new_range_for_guesses(player_guess)
+    while flag_for_break_loop: #start the loop
+        print("##### Player's turn ####") #I announce the player's turn.
+        player_guess= player.get_guess_player() #The participant's secret number is generated.
+        guesses_player.append(player_guess) #The secret number is saved in the lista 
+        player.create_new_range_for_guesses(player_guess) # The minimum and maximum range are updated.
         time.sleep(2)
-        if game.evaluate_guess(player_guess, secretNumber):
-            flag_for_break_loop= False
-            game.show_guesses_winer(guesses_player)
+        if game.evaluate_guess(player_guess, secretNumber): #The chosen number is evaluated against the secret number.
+            flag_for_break_loop= False #change the value of the flag variable to false.
+            game.show_guesses_winer(guesses_player) #All attempts made by the winner are shown.
             break
         
-        print("#### Computer's turn ####")
-        computer_guess= computer.get_guess_computer(minimo, maximo)
+        print("#### Computer's turn ####") #I announce the computer's turn.
+        computer_guess= computer.get_guess_computer(minimo, maximo) #The participant's secret number is generated.
         print(f"It's the computer's turn: {computer_guess} ")
-        guesses_computer.append(computer_guess)
-        computer.create_new_range_for_guesses(computer_guess)
+        guesses_computer.append(computer_guess) #The secret number is saved in the lista 
+        computer.create_new_range_for_guesses(computer_guess) # The minimum and maximum range are updated.
         time.sleep(2)
-        if game.evaluate_guess(computer_guess, secretNumber):
-            flag_for_break_loop= False
-            game.show_guesses_winer(guesses_computer)
+        if game.evaluate_guess(computer_guess, secretNumber): #The chosen number is evaluated against the secret number.
+            flag_for_break_loop= False #change the value of the flag variable to false.
+            game.show_guesses_winer(guesses_computer) #All attempts made by the winner are shown.
             break
 
+    #The ranges and lists are reset to their initial values
     minimo= 1
     maximo= 100
     guesses_computer= []
     guesses_player= []
-     #This return will be used in my test     
-    return flag_for_break_loop
+         
+    return flag_for_break_loop #This return will be used in my test 
 
      
 if __name__ == '__main__':
